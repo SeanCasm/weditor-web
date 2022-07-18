@@ -1,0 +1,15 @@
+@import "./base", "./settings", "./components/footer";
+@import "./components/login";
+
+body {
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  background: url("../img/Main_background.png") repeat center center fixed;
+}
+.background {
+  background-color: $dark-scd;
+  color: $text-prm;
+}
+input{
+  border-radius: 10px;
+  height: 32px;
+}
