@@ -12,6 +12,7 @@ const login = async (req = request, res = response) => {
         msg: "User doesn't exists",
       });
     }
+
     const status = user.status;
     if (!status) {
       return res.status(400).json({
@@ -38,4 +39,14 @@ const login = async (req = request, res = response) => {
   }
 };
 
-module.exports = { login };
+const revalidateToken = async (req, res = response) => {
+  const user = req.user;
+  const token = await createJWT(user.id);
+  res.json({
+    ok: true,
+    user,
+    token,
+  });
+};
+
+module.exports = { login, revalidateToken };

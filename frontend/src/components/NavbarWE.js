@@ -1,9 +1,18 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Container from "react-bootstrap/Container";
+import { useAuth } from "../hooks/useAuth";
+import { useNavigate } from "react-router";
 
-const NavbarWE = (props) => {
+export const NavbarWE = ({ nickname, status }) => {
+  const { startLogout } = useAuth();
+  const navigate = useNavigate();
+  const onLogout = () => {
+    startLogout();
+    navigate("/login", { replace: true });
+  };
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
       <Container>
@@ -18,8 +27,17 @@ const NavbarWE = (props) => {
             <Nav.Link href="#pricing">Support</Nav.Link>
           </Nav>
           <Nav>
-            <Nav.Link href="#home">Sign up</Nav.Link>
-            <Nav.Link href="/login">Login</Nav.Link>
+            {status === "authenticated" ? (
+              <>
+                <Nav.Link>{nickname}</Nav.Link>
+                <Nav.Link onClick={onLogout}>Logout</Nav.Link>
+              </>
+            ) : (
+              <>
+                <Nav.Link href="/login">Sign up</Nav.Link>
+                <Nav.Link href="/home">Sign in</Nav.Link>
+              </>
+            )}
           </Nav>
         </Navbar.Collapse>
       </Container>
@@ -27,6 +45,7 @@ const NavbarWE = (props) => {
   );
 };
 
-NavbarWE.propTypes = {};
-
-export default NavbarWE;
+NavbarWE.propTypes = {
+  nickname: PropTypes.string,
+  status: PropTypes.string,
+};
