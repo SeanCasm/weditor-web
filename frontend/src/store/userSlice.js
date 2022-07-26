@@ -11,21 +11,22 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     onLoggedUser: (state, { payload }) => {
+      console.log(payload);
       state.user = payload;
       state.status = "authenticated";
       state.errorMessage = "";
     },
-    onChecking: (state) => {
-      state.user = "";
-      state.status = "checking";
-      state.errorMessage = "";
-    },
-    onLogError: (state,{payload}) => {
+    onLogError: (state, { payload }) => {
       state.user = {};
       state.status = "not-authenticated";
+      state.errorMessage = payload;
+    },
+    onChecking: (state, { payload }) => {
+      state.user = {};
+      state.status = "checking";
       state.errorMessage = payload;
     },
   },
 });
 
-export const { onLoggedUser, onChecking, onLogError } = userSlice.actions;
+export const { onLoggedUser, onLogError, onChecking } = userSlice.actions;

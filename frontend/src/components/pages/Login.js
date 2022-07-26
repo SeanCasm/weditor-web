@@ -1,40 +1,65 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import Col from "react-bootstrap/Col";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
 import { Container } from "react-bootstrap";
 import { useAuth } from "../../hooks/useAuth";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 export const Login = () => {
   const { startLogin, errorMessage } = useAuth();
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    mode: "onChange",
+    defaultValues,
+    resolver: yupResolver(SignupSchema),
+  });
 
-  const onSubmit = (userData) => {
+  const onSubmit = (userData, e) => {
+    e.preventDefault();
     startLogin(userData);
   };
 
   return (
-    /* "handleSubmit" will validate your inputs before invoking "onSubmit" */
     <Container className="background p-2 mt-5">
-      <form onSubmit={handleSubmit(onSubmit)}>
-        {/* register your input into the hook by invoking the "register" function */}
-        <label>Email</label>
-        <br />
-        <input placeholder="email@gmail.com" {...register("email")} />
-        <br />
-        <br />
-        {/* include validation with required or other standard HTML validation rules */}
-        <label>Password</label>
-        <br />
-        <input type="password" {...register("password", { required: true })} />
-        {/* errors will return when field validation fails  */}
-        {errors.email && <span>This field is required</span>}
-        <br />
-        <br />
-        <p>{errorMessage}</p>
-        <button type="submit">Submit</button>
-      </form>
+      <Form onSubmit={handleSubmit(onSubmit)}>
+        <Form.Group as={Col} md="3" className="mb-3">
+          <Form.Label>Email address</Form.Label>
+          <Form.Control
+            {...register("email")}
+            type="email"
+            placeholder="youremail@something.com"
+          />
+          <span className="text-danger d-block mb-3">
+            {errors?.email?.message}
+          </span>
+
+          <Form.Label>Password</Form.Label>
+          <Form.Control {...register("password")} type="password" />
+          <span className="text-danger d-block mb-3">
+            {errors?.password?.message}
+          </span>
+        </Form.Group>
+        <span className="text-danger d-block mb-3">{errorMessage}</span>
+        <Button variant="primary" type="submit">
+          Submit
+        </Button>
+      </Form>
     </Container>
   );
+};
+const SignupSchema = yup.object().shape({
+  email: yup.string().required("Email is required").email("Invalid email"),
+  password: yup
+    .string()
+    .required("Password is required")
+    .min(8, "Password must have at leats 8 characters"),
+});
+const defaultValues = {
+  email: "",
+  password: "",
 };

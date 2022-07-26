@@ -1,8 +1,10 @@
 import React from "react";
-import { Container } from "react-bootstrap";
+import { NavLink } from "react-router-dom";
+import { LevelCards } from "./LevelCards";
+
 export const HomeContent = () => {
   return (
-    <Container className="background p-2">
+    <div className="background p-2">
       <h1 className="text-center" variant="h5" component="div">
         WEditor official website
       </h1>
@@ -10,9 +12,14 @@ export const HomeContent = () => {
       <br />
       <div className="text-center">
         <p variant="body2">
-          New user? Try to <a href="/">sign up</a>
+          New user? Try to <NavLink to="register">sign up</NavLink>
         </p>
       </div>
-    </Container>
+      <div className="background p-2">
+        <LevelCards />
+        <LevelCards />
+        <LevelCards />
+      </div>
+    </div>
   );
 };

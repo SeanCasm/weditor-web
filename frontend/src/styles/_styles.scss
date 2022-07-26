@@ -1,5 +1,4 @@
-@import "./base", "./settings", "./components/footer";
-@import "./components/login";
+@import "./base", "./settings", "./components/home", "./components/navbar";
 
 body {
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
@@ -9,7 +8,35 @@ body {
   background-color: $dark-scd;
   color: $text-prm;
 }
-input{
+input {
   border-radius: 10px;
   height: 32px;
+}
+.bj-animation {
+  height: 25px;
+  border-radius: 12px;
+  width: 24px;
+  margin-left: 12px;
+  transform: scale(2);
+  background: url("../img/Bj.png");
+  animation: sprite 1.5s steps(3) infinite;
+}
+@keyframes sprite {
+  from {
+    background-position: 0px;
+  }
+  to {
+    background-position: -74px;
+  }
+}
+.terminal {
+  animation-name: sprite;
+  animation-duration: 1.5s;
+  animation-timing-function: steps(3);
+  animation-iteration-count: infinite;
+}
+@media only screen and (max-width: 991px) {
+  .bj-animation {
+    display: none;
+  }
 }

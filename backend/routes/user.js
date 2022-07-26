@@ -2,24 +2,22 @@ const { Router } = require("express");
 const {
   userGet,
   userDelete,
-  userPost,
   userPut,
+  userPost,
 } = require("../controllers/user");
 const { check } = require("express-validator");
-const { validateFields } = require("../middlewares/validate-fields");
 const {
-  validRole,
   emailExists,
   userExistsById,
+  nicknameExists,
 } = require("../helpers/db-validators");
-const { validateJWT } = require("../middlewares/validate-jwt");
-const { validateRole } = require("../middlewares/validate-role");
+const { validateJWT, validateRole, validateFields } = require("../middlewares");
 
 const router = Router();
 
 router.get("/", userGet);
 
-router.put(
+router.delete(
   "/:id",
   [
     validateJWT,
@@ -37,8 +35,11 @@ router.post(
     check("email", "Email isn't  valid").isEmail(),
     check("username", "Username is required").not().isEmpty(),
     check("password", "Password is required").not().isEmpty(),
+    check("password", "Password must be at least 6 characters long").isLength({
+      min: 8,
+    }),
     check("nickname", "Nickname is required").not().isEmpty(),
-    check("role").custom(validRole),
+    check("nickname").custom(nicknameExists),
     check("email").custom(emailExists),
     validateFields,
   ],
@@ -48,9 +49,9 @@ router.post(
 router.put(
   "/:id",
   [
+    validateJWT,
     check("id", "Not a valid ID").isMongoId(),
     check("id").custom(userExistsById),
-
     validateFields,
   ],
   userPut

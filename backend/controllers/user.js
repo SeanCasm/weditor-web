@@ -7,7 +7,7 @@ const userGet = (req = request, res = response) => {
 };
 const userPut = async (req = request, res = response) => {
   const { id } = req.params;
-  const { _id, password, google, email, ...other } = req.body;
+  const { password, google, email, ...other } = req.body;
 
   if (password) {
     const salt = bcryptjs.genSaltSync(12);
@@ -20,8 +20,8 @@ const userPut = async (req = request, res = response) => {
   });
 };
 const userPost = async (req = request, res = response) => {
-  const { username, nickname, password, role, email } = req.body;
-  const user = new User({ username, nickname, email, password, role });
+  const { username, nickname, password, email } = req.body;
+  const user = new User({ username, nickname, email, password });
 
   const salt = bcryptjs.genSaltSync(12);
   user.password = bcryptjs.hashSync(password, salt);

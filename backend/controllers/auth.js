@@ -16,7 +16,7 @@ const login = async (req = request, res = response) => {
     const status = user.status;
     if (!status) {
       return res.status(400).json({
-        msg: `User is no longer available in the basedata.`,
+        msg: `User isn't longer available.`,
       });
     }
     const validPassword = bcryptjs.compareSync(password, user.password);
@@ -34,14 +34,14 @@ const login = async (req = request, res = response) => {
   } catch (err) {
     console.log(err);
     res.status(400).json({
-      msg: "Something happened, please contact with the administrator",
+      msg: "Something is wrong, please contact with the administrator",
     });
   }
 };
 
 const revalidateToken = async (req, res = response) => {
   const user = req.user;
-  const token = await createJWT(user.id);
+  const token = await createJWT(user.uid);
   res.json({
     ok: true,
     user,

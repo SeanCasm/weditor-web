@@ -7,22 +7,35 @@ const validRole = async (role) => {
     throw new Error(`Role ${role} isn't defined`);
   }
 };
-
+const levelNameExists = async (levelName) => {
+  const levelExists = await Level.findOne({ levelName });
+  if (levelExists) {
+    throw new Error("The level name is already in use, try another");
+  }
+};
+const nicknameExists = async (nickname) => {
+  const exists = await User.findOne({ nickname });
+  if (exists) {
+    throw new Error("Nickname already in use.");
+  }
+};
 const emailExists = async (email) => {
   const exists = await User.findOne({ email });
   if (exists) {
-    throw new Error("Email already exists");
+    throw new Error("Email already in use");
   }
 };
 
-const userExistsById = async (id) => {
-  const exists = await User.findById(id);
+const userExistsById = async (uid) => {
+  const exists = await User.findById(uid);
   if (!exists) {
-    throw new Error("User doesn't exist");
+    throw new Error("User doesn't exists");
   }
 };
 module.exports = {
   validRole,
   emailExists,
+  nicknameExists,
   userExistsById,
+  levelNameExists,
 };

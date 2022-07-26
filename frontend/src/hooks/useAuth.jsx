@@ -5,12 +5,10 @@ export const useAuth = () => {
   const { status, user, errorMessage } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
-  const startLogin = async (userData) => {
-    const { email, password } = userData;
+  const startLogin = async ({ email, password }) => {
     dispatch(onChecking());
     try {
       const { data } = await authApi.post("/login", { email, password });
-      console.log(data);
       localStorage.setItem("x-token", data.token);
       dispatch(onLoggedUser(data.user));
     } catch (err) {
@@ -27,7 +25,6 @@ export const useAuth = () => {
   const checkAuthToken = async () => {
     const token = localStorage.getItem("x-token");
     if (!token) return dispatch(onLogError());
-
     try {
       const { data } = await authApi.get("/renew");
       localStorage.setItem("x-token", data.token);
