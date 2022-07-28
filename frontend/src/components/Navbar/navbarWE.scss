@@ -1,16 +1,14 @@
-@import "./base", "./settings", "./components/home", "./components/navbar";
+@import "../../styles/variables";
 
-body {
-  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-  background: url("../img/Main_background.png") repeat center center fixed;
+.active {
+  color: white;
+  text-decoration: none;
+  padding: 0 5px;
 }
-.background {
-  background-color: $dark-scd;
+.navlink {
+  text-decoration: none;
   color: $text-prm;
-}
-input {
-  border-radius: 10px;
-  height: 32px;
+  padding: 0 5px;
 }
 .bj-animation {
   height: 25px;
@@ -18,7 +16,7 @@ input {
   width: 24px;
   margin-left: 12px;
   transform: scale(2);
-  background: url("../img/Bj.png");
+  background: url("../../img/Bj.png");
   animation: sprite 1.5s steps(3) infinite;
 }
 @keyframes sprite {

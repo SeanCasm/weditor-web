@@ -11,7 +11,6 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     onLoggedUser: (state, { payload }) => {
-      console.log(payload);
       state.user = payload;
       state.status = "authenticated";
       state.errorMessage = "";

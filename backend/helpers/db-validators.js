@@ -1,10 +1,24 @@
 const Role = require("../models/role");
 const User = require("../models/user");
+const LevelInfo = require("../models/levelInfo");
+const Level = require("../models/level");
 
 const validRole = async (role) => {
   const roleExists = await Role.findOne({ role });
   if (!roleExists) {
     throw new Error(`Role ${role} isn't defined`);
+  }
+};
+const levelRatedByUser = async (user, id) => {
+  const levelIsRated = await Rating.findOne({ id, user });
+  if (levelIsRated) {
+    throw new Error("This level have rating by");
+  }
+};
+const levelInfoNameExists = async (levelName) => {
+  const levelExists = await LevelInfo.findOne({ levelName });
+  if (levelExists) {
+    throw new Error("The level name is already in use, try another");
   }
 };
 const levelNameExists = async (levelName) => {
@@ -38,4 +52,6 @@ module.exports = {
   nicknameExists,
   userExistsById,
   levelNameExists,
+  levelInfoNameExists,
+  levelRatedByUser,
 };

@@ -20,18 +20,22 @@ const LevelSchema = Schema({
   description: {
     type: String,
   },
-  rating: {
-    type: Number,
-    default: 0,
-  },
   comments: {
     type: Schema.Types.ObjectId,
     ref: "Comment",
+  },
+  levelInfo: {
+    type: Schema.Types.ObjectId,
+    ref: "LevelInfo",
   },
   user: {
     type: Schema.Types.ObjectId,
     ref: "User",
     required: true,
+  },
+  rating: {
+    type: Schema.Types.ObjectId,
+    ref: "Rating",
   },
 });
 

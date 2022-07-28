@@ -1,6 +1,5 @@
 const { response, request } = require("express");
 const Level = require("../models/level");
-const User = require("../models/user");
 
 const levelGetFromAll = async (req = request, res = response) => {
   const { limit = 3, from = 0 } = req.query;
@@ -10,6 +9,22 @@ const levelGetFromAll = async (req = request, res = response) => {
     Level.find(query).skip(Number(from)).limit(Number(limit)),
     Level.countDocuments(query),
   ]);
+  res.json({
+    levels,
+    total,
+  });
+};
+
+const getOwnLevel = async (req = request, res = response) => {
+  const { limit = 3, from = 0 } = req.query;
+  const query = { user: req.user.id };
+  console.log(query);
+
+  const [levels, total] = await Promise.all([
+    Level.find(query).skip(Number(from)).limit(Number(limit)),
+    Level.countDocuments(query),
+  ]);
+
   res.json({
     levels,
     total,
@@ -56,13 +71,16 @@ const levelPut = async (req = request, res = response) => {
 };
 const levelPost = async (req = request, res = response) => {
   const { levelName, description } = req.body;
-  const level = new Level({ levelName, description, user: req.user._id });
-
-  await level.save();
-
+  const level = new Level({
+    levelName,
+    description,
+    user: req.user._id,
+  });
+  const { id } = await level.save();
   res.json({
-    msg: "Level correctly uploaded",
-    level,
+    msg: "Upload done",
+    levelName,
+    id,
   });
 };
 const levelDelete = async (req = request, res = response) => {
@@ -89,4 +107,5 @@ module.exports = {
   levelDelete,
   levelUpdate,
   levelGetByUser,
+  getOwnLevel,
 };

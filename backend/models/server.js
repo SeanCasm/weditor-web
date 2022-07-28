@@ -10,6 +10,7 @@ class Server {
       auth: "/api/auth",
       level: "/api/level",
       comment: "/api/comment",
+      levelInfo: "/api/levelInfo",
     };
 
     this.connectDB();
@@ -25,6 +26,7 @@ class Server {
     this.app.use(this.paths.user, require("../routes/user"));
     this.app.use(this.paths.level, require("../routes/level"));
     this.app.use(this.paths.comment, require("../routes/comment"));
+    this.app.use(this.paths.levelInfo, require("../routes/levelInfo"));
   }
   middlewares() {
     this.app.use(cors());
@@ -33,7 +35,7 @@ class Server {
   }
   listen() {
     this.app.listen(this.port, () => {
-      console.log("Server escuchando...");
+      console.log("Server listening...");
     });
   }
 }

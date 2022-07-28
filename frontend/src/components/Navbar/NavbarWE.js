@@ -1,13 +1,14 @@
 import React from "react";
-import PropTypes from "prop-types";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Container from "react-bootstrap/Container";
 import { NavLink } from "react-router-dom";
 
 import { NavbarActions } from "./NavbarActions";
-
-export const NavbarWE = ({ nickname, status }) => {
+import { useAuth } from "../../hooks/useAuth";
+import "./navbarWE.scss";
+export const NavbarWE = () => {
+  const { status, user } = useAuth();
   const leftSideLinks = ["Explore", "About", "Download", "Support"];
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
@@ -33,7 +34,7 @@ export const NavbarWE = ({ nickname, status }) => {
           <Nav>
             {status === "authenticated" ? (
               <>
-                <NavbarActions nickname={nickname} />
+                <NavbarActions nickname={user.nickname} />
                 <div className="bj-animation"></div>
               </>
             ) : (
@@ -50,7 +51,7 @@ export const NavbarWE = ({ nickname, status }) => {
                   className={({ isActive }) =>
                     isActive ? "active" : "navlink"
                   }
-                  to="/login"
+                  to="login"
                 >
                   Sign in
                 </NavLink>
@@ -61,9 +62,4 @@ export const NavbarWE = ({ nickname, status }) => {
       </Container>
     </Navbar>
   );
-};
-
-NavbarWE.propTypes = {
-  nickname: PropTypes.string,
-  status: PropTypes.string,
 };

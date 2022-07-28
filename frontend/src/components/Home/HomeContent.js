@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { LevelCards } from "./LevelCards";
+import { LevelCards } from "../LevelCard/LevelCard";
 
 export const HomeContent = () => {
   return (
@@ -15,11 +15,7 @@ export const HomeContent = () => {
           New user? Try to <NavLink to="register">sign up</NavLink>
         </p>
       </div>
-      <div className="background p-2">
-        <LevelCards />
-        <LevelCards />
-        <LevelCards />
-      </div>
+      
     </div>
   );
 };

@@ -14,15 +14,15 @@ export const NavbarActions = ({ nickname, img }) => {
   return (
     <>
       <NavDropdown title={nickname} id="nav-dropdown">
-        <NavDropdown.Item
-          as={Link}
-          to="/profile"
-          eventKey="4.1"
-        >
+        <NavDropdown.Item as={Link} to="profile" eventKey="4.1">
           Profile
         </NavDropdown.Item>
-        <NavDropdown.Item eventKey="4.2">Share a level</NavDropdown.Item>
-        <NavDropdown.Item eventKey="4.3">Notifications</NavDropdown.Item>
+        <NavDropdown.Item as={Link} to="upload">
+          Upload a level
+        </NavDropdown.Item>
+        <NavDropdown.Item  eventKey="4.3">
+          Notifications
+        </NavDropdown.Item>
         <NavDropdown.Divider />
         <NavDropdown.Item onClick={onLogout}>Logout</NavDropdown.Item>
       </NavDropdown>

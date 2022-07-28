@@ -6,6 +6,7 @@ const {
   levelDelete,
   levelUpdate,
   levelGetByUser,
+  getOwnLevel,
 } = require("../controllers/level");
 const { check } = require("express-validator");
 const { validateFields, validateJWT } = require("../middlewares");
@@ -16,6 +17,7 @@ const router = Router();
 router.get("/", levelGetFromAll);
 
 router.get("/:id", [validateJWT, check("id").isMongoId()], levelGetByUser);
+router.get("/", validateJWT, getOwnLevel);
 
 router.delete(
   "/:id",
@@ -38,7 +40,7 @@ router.post(
   "/",
   [
     validateJWT,
-    check("levelName").notEmpty(),
+    check("levelName").not().isEmpty(),
     check("levelName").custom(levelNameExists),
     validateFields,
   ],

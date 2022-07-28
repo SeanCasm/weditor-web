@@ -1,16 +1,16 @@
 import React from "react";
 import { BrowserRouter } from "react-router-dom";
-import "./styles/_styles.scss";
+import "./styles/global.scss";
 import { Provider } from "react-redux";
 import { AppRouter } from "./routers/AppRouter";
 import { store } from "./store";
 // import "animate.css";
 export const App = () => {
   return (
-    <Provider store={store}>
-      <BrowserRouter>
+    <BrowserRouter>
+      <Provider store={store}>
         <AppRouter />
-      </BrowserRouter>
-    </Provider>
+      </Provider>
+    </BrowserRouter>
   );
 };

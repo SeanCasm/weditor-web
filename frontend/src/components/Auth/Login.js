@@ -19,13 +19,13 @@ export const Login = () => {
     resolver: yupResolver(SignupSchema),
   });
 
-  const onSubmit = (userData, e) => {
+  const onSubmit = ({ email, password }, e) => {
     e.preventDefault();
-    startLogin(userData);
+    startLogin(email, password);
   };
 
   return (
-    <Container className="background p-2 mt-5">
+    <>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Form.Group as={Col} md="3" className="mb-3">
           <Form.Label>Email address</Form.Label>
@@ -49,7 +49,7 @@ export const Login = () => {
           Submit
         </Button>
       </Form>
-    </Container>
+    </>
   );
 };
 const SignupSchema = yup.object().shape({
