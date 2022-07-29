@@ -1,3 +1,3 @@
 export * from "./Account";
 export * from "./Profile";
-export * from "./LevelsScreen";
+export * from "./LevelScreen";

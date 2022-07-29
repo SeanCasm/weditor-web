@@ -7,12 +7,14 @@ export const useAuth = () => {
 
   const startLogin = async (email, password) => {
     dispatch(onChecking());
+    console.log(process.env.REACT_APP_API_URL);
     try {
       const { data } = await authApi.post("/login", { email, password });
       localStorage.setItem("x-token", data.token);
+      localStorage.setItem("uid", data.user.uid);
       dispatch(onLoggedUser(data.user));
     } catch (err) {
-      dispatch(onLogError());
+      dispatch(onLogError(err.response.data.msg));
       console.log({ err });
     }
   };

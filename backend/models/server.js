@@ -11,6 +11,7 @@ class Server {
       level: "/api/level",
       comment: "/api/comment",
       levelInfo: "/api/levelInfo",
+      rating: "/api/rating",
     };
 
     this.connectDB();
@@ -27,6 +28,7 @@ class Server {
     this.app.use(this.paths.level, require("../routes/level"));
     this.app.use(this.paths.comment, require("../routes/comment"));
     this.app.use(this.paths.levelInfo, require("../routes/levelInfo"));
+    this.app.use(this.paths.rating, require("../routes/rating"));
   }
   middlewares() {
     this.app.use(cors());

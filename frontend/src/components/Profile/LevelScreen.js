@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useLevel } from "../../hooks/useLevel";
-import { LevelCards } from "../LevelCard/LevelCard";
+import { LevelDisplay } from "../Level/LevelCard";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useNavigate } from "react-router";
-export const LevelsScreen = () => {
+export const LevelScreen = () => {
   const { levels, startGet, status, setLevels, message } = useLevel();
   const { register, handleSubmit } = useForm({
     mode: "onChange",
@@ -50,7 +50,7 @@ export const LevelsScreen = () => {
           levels.map((lvl) => {
             return (
               <li className="row" key={lvl._id}>
-                <LevelCards className="col-sm" levelData={lvl} />
+                <LevelDisplay className="col-sm" levelData={lvl} />
               </li>
             );
           })}

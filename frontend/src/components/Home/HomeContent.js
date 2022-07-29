@@ -1,6 +1,5 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { LevelCards } from "../LevelCard/LevelCard";
 
 export const HomeContent = () => {
   return (
