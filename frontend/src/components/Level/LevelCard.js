@@ -5,15 +5,12 @@ import Card from "react-bootstrap/Card";
 import { useLevelConfig } from "../../hooks/useLevelConfig";
 import { LevelSettings } from "./LevelSettings";
 
-export const LevelDisplay = ({ levelData }) => {
-  const { levelName, description, downloads, rating } = levelData;
+export const LevelCard = ({ levelData }) => {
+  const { levelName, description, downloads, rating, _id } = levelData;
   const { onDisplayModal, status } = useLevelConfig();
-
   return (
     <>
-      {status && (
-        <LevelSettings levelName={levelName} description={description} />
-      )}
+      {status && <LevelSettings levelData={levelData} />}
       <Card style={{ width: "18rem" }}>
         <Card.Body>
           <Card.Title>{levelName}</Card.Title>
@@ -31,7 +28,11 @@ export const LevelDisplay = ({ levelData }) => {
                 src="https://cdn-icons-png.flaticon.com/128/1191/1191227.png?ga=GA1.2.1917655979.1659037910"
               ></Card.Img>
             </button>
-            <button onClick={onDisplayModal}>
+            <button
+              onClick={() => {
+                onDisplayModal(levelName, description);
+              }}
+            >
               <img
                 width={24}
                 alt="More options"
@@ -44,9 +45,6 @@ export const LevelDisplay = ({ levelData }) => {
     </>
   );
 };
-LevelDisplay.propTypes = {
-  levelName: PropTypes.string,
-  description: PropTypes.string,
-  downloads: PropTypes.number,
-  rating: PropTypes.number,
+LevelCard.propTypes = {
+  levelData: PropTypes.object,
 };

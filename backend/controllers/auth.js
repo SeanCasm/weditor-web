@@ -41,7 +41,6 @@ const login = async (req = request, res = response) => {
 
 const revalidateToken = async (req, res = response) => {
   const user = req.user;
-  console.log(user);
   const token = await createJWT(user.id);
   res.json({
     ok: true,

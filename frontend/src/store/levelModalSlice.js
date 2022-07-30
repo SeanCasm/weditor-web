@@ -2,6 +2,9 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   status: false,
+  levelName: "",
+  description: "",
+  msg: "",
 };
 
 export const levelModalSlice = createSlice({
@@ -10,10 +13,20 @@ export const levelModalSlice = createSlice({
   reducers: {
     onModalDisplay: (state, { payload }) => {
       state.status = true;
+      state.levelName = payload.levelName;
+      state.description = payload.description;
     },
+
     onModalHide: (state, { payload }) => {
       state.status = false;
+      state.levelName = "";
+      state.description = "";
+    },
+    onSaveError: (state, { payload }) => {
+      state.status = false;
+      state.msg = payload;
     },
   },
 });
-export const { onModalDisplay, onModalHide } = levelModalSlice.actions;
+export const { onModalDisplay, onModalHide, onSaveError } =
+  levelModalSlice.actions;

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router";
 import { levelApi, levelInfoApi } from "../api";
 import {
   onUpload,
@@ -12,7 +13,7 @@ import {
 
 export const useLevel = () => {
   const [levels, setLevels] = useState([]);
-
+  const navigate = useNavigate();
   const { status, levelName, message } = useSelector((state) => state.level);
   const dispatch = useDispatch();
 
@@ -36,6 +37,7 @@ export const useLevel = () => {
       const { id } = data;
       jsonData.level = id;
       const dataInfo = await levelInfoApi.post("", jsonData);
+      navigate("/profile/myLevels", { replace: true });
       dispatch(onUpload(dataInfo.data.msg));
     } catch (err) {
       dispatch(onUploadError(err.response.data.errors[0].msg));

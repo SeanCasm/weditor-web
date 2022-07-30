@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useLevel } from "../../hooks/useLevel";
-import { LevelDisplay } from "../Level/LevelCard";
+import { LevelCard } from "../Level/LevelCard";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
@@ -15,7 +15,7 @@ export const LevelScreen = () => {
   const navigate = useNavigate();
 
   const onNewPressed = () => {
-    navigate("upload", { replace: false });
+    navigate("../../upload", { replace: false });
   };
   useEffect(() => {
     startGet(3, 0);
@@ -40,7 +40,9 @@ export const LevelScreen = () => {
         <Button variant="success" type="submit">
           Done
         </Button>
-        <Button variant="secondary">New</Button>
+        <Button onClick={onNewPressed} variant="secondary">
+          New
+        </Button>
       </Form>
       <br />
       <h3>{message}</h3>
@@ -50,7 +52,7 @@ export const LevelScreen = () => {
           levels.map((lvl) => {
             return (
               <li className="row" key={lvl._id}>
-                <LevelDisplay className="col-sm" levelData={lvl} />
+                <LevelCard className="col-sm" levelData={lvl} />
               </li>
             );
           })}

@@ -1,5 +1,6 @@
 const { response, request } = require("express");
 const Level = require("../models/level");
+const levelInfo = require("../models/levelInfo");
 
 const levelGetFromAll = async (req = request, res = response) => {
   const { limit = 3, from = 0 } = req.query;
@@ -48,8 +49,9 @@ const levelGetByUser = async (req = request, res = response) => {
 const levelUpdate = async (req = request, res = response) => {
   const { id } = req.params;
   const { ...content } = req.body;
+  const options = { new: true };
   try {
-    const level = await Level.findByIdAndUpdate(id, content);
+    const level = await Level.findByIdAndUpdate(id, content, options);
     res.json(level);
   } catch (err) {
     console.log(err);
@@ -85,10 +87,12 @@ const levelPost = async (req = request, res = response) => {
 };
 const levelDelete = async (req = request, res = response) => {
   const { id } = req.params;
-  const { status } = req.body;
 
   try {
-    const levelDeleted = await Level.findByIdAndUpdate(id, status);
+    const levelDeleted = await Level.findByIdAndDelete(id);
+    if (levelDeleted) {
+      await levelInfo.findOneAndDelete({ level: id });
+    }
     res.json({
       msg: "Level status correctly updated",
       levelDeleted,
